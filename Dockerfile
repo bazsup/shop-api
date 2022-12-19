@@ -1,4 +1,4 @@
-FROM openjdk:18-jdk-alpine
+FROM openjdk:11.0.16-jre-slim
 
 ARG JAR_FILE=target/*.jar
 
