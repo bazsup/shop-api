@@ -4,8 +4,10 @@ on:
   push:
     branches: [ "main" ]
 
-jobs:
+permissions:
+  packages: write
 
+jobs:
   build-jar-and-publish:
     runs-on: ubuntu-latest
     steps:
