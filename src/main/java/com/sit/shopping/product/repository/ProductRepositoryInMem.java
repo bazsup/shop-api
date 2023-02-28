@@ -28,7 +28,7 @@ public class ProductRepositoryInMem implements ProductRepository, InitializingBe
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/453555/sub/goods_453555_sub14"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Printed Cotton Square Neck Short Sleeve Mini Dress", 28.28,
-				"https://image.uniqlo.com/UQ/ST3/th/imagesgoods/449183/item/thgoods_01_449183.jpg"
+				"https://image.uniqlo.com/UQ/ST3/th/imagesgoods/449183/item/thgoods_01_449183"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Printed Button Down Camisole Flare Dress", 42.57,
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/455793/sub/goods_455793_sub14"
