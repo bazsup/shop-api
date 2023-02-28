@@ -18,6 +18,9 @@ public class ProductRepositoryInMem implements ProductRepository, InitializingBe
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
+		this.products.add(Product.create("Loose Cropped Jeans (Damaged)", 42.57,
+				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/448429/sub/goods_448429_sub14"
+						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Smart Skort Solid", 140.37,
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/455844/sub/goods_455844_sub14"
 						+ ".jpg?width=1600&impolicy=quality_75"));
@@ -25,7 +28,7 @@ public class ProductRepositoryInMem implements ProductRepository, InitializingBe
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/453555/sub/goods_453555_sub14"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Printed Cotton Square Neck Short Sleeve Mini Dress", 28.28,
-				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/449183/sub/goods_449183_sub13"
+				"https://image.uniqlo.com/UQ/ST3/th/imagesgoods/449183/item/thgoods_01_449183.jpg"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Printed Button Down Camisole Flare Dress", 42.57,
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/455793/sub/goods_455793_sub14"
@@ -34,7 +37,7 @@ public class ProductRepositoryInMem implements ProductRepository, InitializingBe
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/452896/sub/goods_452896_sub14"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Soft Twill Stands Collar Long Sleeve Shirt", 28.28,
-				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/446995/sub/goods_446995_sub13"
+				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/450261/item/goods_56_450261"
 						+ ".jpg?width=1600&impolicy=quality_75"));
 		this.products.add(Product.create("Oxford Striped Slim Fit Long Sleeve Shirt", 28.28,
 				"https://image.uniqlo.com/UQ/ST3/AsianCommon/imagesgoods/452300/sub/goods_452300_sub14"
