@@ -28,11 +28,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ghcr.io/tanapoln/sit-swtc-shopapi:${{ github.sha }}
+        run: docker build . --file Dockerfile --tag ghcr.io/bazsup/shop-api:${{ github.sha }}
 
       - name: Publish the Docker image
         run: |
-          docker tag ghcr.io/bazsup/sit-swtc-shopapi:${{ github.sha }} ghcr.io/tanapoln/sit-swtc-shopapi:latest
-          # docker push ghcr.io/bazsup/sit-swtc-shopapi:${{ github.sha }}
-          docker push ghcr.io/bazsup/sit-swtc-shopapi:latest
+          docker tag ghcr.io/bazsup/shop-api:${{ github.sha }} ghcr.io/bazsup/shop-api:v1
+          docker push ghcr.io/bazsup/shop-api:v1
           
