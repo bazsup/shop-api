@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sit.shopping.exception.EntityNotFoundException;
+import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 
 class ProductRepositoryInMemTest {
@@ -20,7 +21,7 @@ class ProductRepositoryInMemTest {
 	void setUp() {
 		underTest = new ProductRepositoryInMem();
 
-		testProduct = Product.create("test product", 10, "https://image");
+		testProduct = Product.create("test product", 10, "https://image", Category.MEN);
 		underTest.addProduct(testProduct);
 	}
 

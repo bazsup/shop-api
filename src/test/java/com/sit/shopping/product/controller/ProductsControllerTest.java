@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 class ProductsControllerTest {
     private ProductsController underTest;
@@ -28,7 +29,7 @@ class ProductsControllerTest {
     void testGetProducts() {
         Mockito.when(mockProductRepository.findAll()).thenReturn(List.of(new Product()));
 
-        ProductsResponse response = underTest.getProducts();
+        ProductsResponse response = underTest.getProducts(Optional.empty());
 
         MatcherAssert.assertThat(response.getData().size(), CoreMatchers.equalTo(1));
     }
@@ -37,7 +38,7 @@ class ProductsControllerTest {
     void testGetEmptyProducts() {
         Mockito.when(mockProductRepository.findAll()).thenReturn(Collections.emptyList());
 
-        ProductsResponse response = underTest.getProducts();
+        ProductsResponse response = underTest.getProducts(Optional.empty());
 
         MatcherAssert.assertThat(response.getData().size(), CoreMatchers.equalTo(0));
     }

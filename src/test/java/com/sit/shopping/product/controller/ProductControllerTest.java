@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.sit.shopping.exception.EntityNotFoundException;
+import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 import com.sit.shopping.product.repository.ProductRepository;
 
@@ -26,7 +27,7 @@ class ProductControllerTest {
     @Test
     void testGetProductById() {
         String expectedId = "id-product-001";
-        Product expected = Product.create("p1", 10.0, "https://image.com/p1.png");
+        Product expected = Product.create("p1", 10.0, "https://image.com/p1.png", Category.MEN);
         expected.setId(expectedId);
 
         Mockito.when(mockProductRepository.findByProductId(expectedId)).thenReturn(expected);
