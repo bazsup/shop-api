@@ -10,6 +10,7 @@ import com.sit.shopping.product.model.Product;
 import com.sit.shopping.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import com.sit.shopping.cart.model.Cart;
 
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin
 @Validated
 public class CartController {
     @Autowired
