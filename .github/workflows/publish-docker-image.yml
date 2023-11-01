@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "opentelemetry" ]
 
 jobs:
   build-jar-and-publish:
@@ -31,6 +31,6 @@ jobs:
 
       - name: Publish the Docker image
         run: |
-          docker tag ghcr.io/bazsup/shop-api:${{ github.sha }} ghcr.io/bazsup/shop-api:v1
-          docker push ghcr.io/bazsup/shop-api:v1
+          docker tag ghcr.io/bazsup/shop-api:${{ github.sha }} ghcr.io/bazsup/shop-api:demo-tracing
+          docker push ghcr.io/bazsup/shop-api:demo-tracing
           
