@@ -1,5 +1,8 @@
 package com.sit.shopping.cart.controller;
 
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -41,11 +44,14 @@ public class CartController {
 
     @PostMapping("/add")
     public AddProductResponse addProductToCart(@RequestBody @Valid AddProductRequest request) {
-        Product product = productRepository.findByProductId(request.getProductId());
+        Optional<Product> product = productRepository.findById(request.getProductId());
+        if (product.isEmpty()) {
+            throw new EntityNotFoundException();
+        }
 
         Cart cart = cartRepository.findOrCreateCart(request.getCartId());
 
-        cart.addProduct(product);
+        cart.addProduct(product.get());
 
         cartRepository.save(cart);
 

@@ -1,5 +1,4 @@
 package com.sit.shopping.product.repository;
-//  implements ProductRepository
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

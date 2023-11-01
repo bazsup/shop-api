@@ -1,9 +1,8 @@
 package com.sit.shopping.product.controller;
 
+import com.sit.shopping.exception.EntityNotFoundException;
 import com.sit.shopping.product.model.Product;
 import com.sit.shopping.product.repository.ProductRepository;
-
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProductById(@PathVariable String id) {
+    public Product getProductById(@PathVariable String id) {
         LOGGER.info("Getting Product with Product Id {}", id);
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("A product cannot be found"));
     }
 }
