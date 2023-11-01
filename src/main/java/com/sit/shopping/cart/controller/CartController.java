@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 import com.sit.shopping.cart.repository.CartRepository;
+import com.sit.shopping.client.ProductClient;
 import com.sit.shopping.coupon.model.Coupon;
 import com.sit.shopping.coupon.repository.CouponRepository;
 import com.sit.shopping.product.model.Product;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.sit.shopping.cart.dto.AddProductRequest;
 import com.sit.shopping.cart.dto.AddProductResponse;
@@ -40,18 +42,18 @@ public class CartController {
     private ProductRepository productRepository;
 
     @Autowired
+    private ProductClient productClient;
+
+    @Autowired
     private CouponRepository couponRepository;
 
     @PostMapping("/add")
     public AddProductResponse addProductToCart(@RequestBody @Valid AddProductRequest request) {
-        Optional<Product> product = productRepository.findById(request.getProductId());
-        if (product.isEmpty()) {
-            throw new EntityNotFoundException();
-        }
+        Product product = productClient.getProduct(request.getProductId());
 
         Cart cart = cartRepository.findOrCreateCart(request.getCartId());
 
-        cart.addProduct(product.get());
+        cart.addProduct(product);
 
         cartRepository.save(cart);
 
