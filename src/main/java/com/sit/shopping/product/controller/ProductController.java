@@ -2,6 +2,11 @@ package com.sit.shopping.product.controller;
 
 import com.sit.shopping.product.model.Product;
 import com.sit.shopping.product.repository.ProductRepository;
+
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -19,8 +27,8 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable String id) {
-        Product product = productRepository.findByProductId(id);
-        return product;
+    public Optional<Product> getProductById(@PathVariable String id) {
+        LOGGER.info("Getting Product with Product Id {}", id);
+        return productRepository.findById(id);
     }
 }

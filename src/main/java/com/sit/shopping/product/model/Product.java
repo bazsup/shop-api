@@ -2,11 +2,32 @@ package com.sit.shopping.product.model;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+@Table(name = "products")
 public class Product {
+
+	@Id @GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
+
+	@Column(name = "name", nullable = false)
 	private String name;
+	
+	@Column(name = "price", nullable = false)
 	private double price;
+
+	@Column(name = "imageUrl", nullable = false)
 	private String imageUrl;
+
+	@Column(name = "category", nullable = false)
 	private Category category;
 
 	public Product() {

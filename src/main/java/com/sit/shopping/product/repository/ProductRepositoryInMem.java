@@ -2,16 +2,21 @@ package com.sit.shopping.product.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Repository;
 
-import com.sit.shopping.exception.EntityNotFoundException;
+import com.sit.shopping.product.controller.ProductController;
 import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 
-@Repository
+// @Repository
 public class ProductRepositoryInMem implements ProductRepository, InitializingBean {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
+
 	private final List<Product> products = new ArrayList<>();
 
 	public ProductRepositoryInMem() {
@@ -50,9 +55,9 @@ public class ProductRepositoryInMem implements ProductRepository, InitializingBe
 	}
 
 	@Override
-	public Product findByProductId(String productId) {
-		return this.products.stream().filter(product -> product.getId().equals(productId)).findFirst()
-				.orElseThrow(() -> new EntityNotFoundException("A product cannot be found"));
+	public Optional<Product> findById(String productId) {
+		LOGGER.info("Getting Product from Product Repo with Product Id {}", productId);
+		return this.products.stream().filter(product -> product.getId().equals(productId)).findFirst();
 	}
 
 	@Override
