@@ -7,12 +7,15 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 
 import com.sit.shopping.product.controller.ProductController;
 import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 
-// @Repository
+@Repository
+@ConditionalOnProperty(name = "in-memory-database.enabled", havingValue = "true")
 public class ProductRepositoryInMem implements ProductRepository, InitializingBean {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
