@@ -1,4 +1,4 @@
-FROM openjdk:11.0.16-jre-slim
+FROM azul/zulu-openjdk:17.0.9-jre
 
 ARG JAR_FILE=target/*.jar
 
