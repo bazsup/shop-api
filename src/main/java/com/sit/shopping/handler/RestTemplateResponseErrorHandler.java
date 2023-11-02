@@ -3,6 +3,7 @@ package com.sit.shopping.handler;
 import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -12,32 +13,33 @@ import com.sit.shopping.exception.EntityNotFoundException;
 
 @Component
 public class RestTemplateResponseErrorHandler
-    implements ResponseErrorHandler {
+        implements ResponseErrorHandler {
 
     @Override
     public boolean hasError(ClientHttpResponse httpResponse)
-        throws IOException {
+            throws IOException {
 
         return (httpResponse
-          .getStatusCode()
-          .series() == HttpStatus.Series.CLIENT_ERROR || httpResponse
-          .getStatusCode()
-          .series() == HttpStatus.Series.SERVER_ERROR);
+                .getStatusCode()
+                .is4xxClientError() ||
+                httpResponse
+                        .getStatusCode()
+                        .is5xxServerError());
     }
 
     @Override
     public void handleError(ClientHttpResponse httpResponse)
-        throws IOException {
+            throws IOException {
 
         if (httpResponse
-          .getStatusCode()
-          .series() == HttpStatus.Series.SERVER_ERROR) {
-            //Handle SERVER_ERROR
+                .getStatusCode()
+                .is5xxServerError()) {
+            // Handle SERVER_ERROR
             throw new HttpClientErrorException(httpResponse.getStatusCode());
         } else if (httpResponse
-          .getStatusCode()
-          .series() == HttpStatus.Series.CLIENT_ERROR) {
-            //Handle CLIENT_ERROR
+                .getStatusCode()
+                .is4xxClientError()) {
+            // Handle CLIENT_ERROR
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
                 throw new EntityNotFoundException("A product could not be found");
             }
