@@ -15,7 +15,7 @@ import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 
 @Repository
-@ConditionalOnProperty(name = "in-memory-database.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "database.inmemory.enabled", havingValue = "true")
 public class ProductRepositoryInMem implements ProductRepository, InitializingBean {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);

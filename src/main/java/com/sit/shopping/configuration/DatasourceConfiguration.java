@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
-@ConditionalOnProperty(name = "in-memory-database.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "database.inmemory.enabled", havingValue = "true")
 @Configuration
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,
