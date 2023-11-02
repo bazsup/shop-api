@@ -1,0 +1,47 @@
+version: '4.0'
+
+services:
+  cart-service:
+    build: 
+      context: .
+    ports:
+      - 8081:8080
+    environment:
+      - SERVICE_NAME=cart-service
+      - JAEGER_OTEL_EXPORTER_URL=http://host.docker.internal:4318/v1/traces
+      - DATABASE_URL=jdbc:postgresql://db/postgres
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=example
+      - IN_MEMORY_DB_ENABLED=false
+      - PRODUCT_API=http://host.docker.internal:8082
+    depends_on:
+      - db
+  
+  product-service:
+    build: 
+      context: .
+    ports:
+      - 8082:8080
+    environment:
+      - SERVICE_NAME=product-service
+      - JAEGER_OTEL_EXPORTER_URL=http://host.docker.internal:4318/v1/traces
+      - DATABASE_URL=jdbc:postgresql://db/postgres
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=example
+      - IN_MEMORY_DB_ENABLED=false
+      - PRODUCT_API=http://host.docker.internal:8082
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=example
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    ports:
+      - 9000:8080
