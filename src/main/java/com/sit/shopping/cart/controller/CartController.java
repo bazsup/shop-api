@@ -1,8 +1,5 @@
 package com.sit.shopping.cart.controller;
 
-import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -11,7 +8,6 @@ import com.sit.shopping.client.ProductClient;
 import com.sit.shopping.coupon.model.Coupon;
 import com.sit.shopping.coupon.repository.CouponRepository;
 import com.sit.shopping.product.model.Product;
-import com.sit.shopping.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.sit.shopping.cart.dto.AddProductRequest;
 import com.sit.shopping.cart.dto.AddProductResponse;
@@ -37,9 +32,6 @@ import com.sit.shopping.cart.model.Cart;
 public class CartController {
     @Autowired
     private CartRepository cartRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     @Autowired
     private ProductClient productClient;
