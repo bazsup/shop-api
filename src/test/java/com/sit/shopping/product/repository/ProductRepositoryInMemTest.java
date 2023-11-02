@@ -6,11 +6,9 @@ import java.util.Optional;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.sit.shopping.exception.EntityNotFoundException;
 import com.sit.shopping.product.model.Category;
 import com.sit.shopping.product.model.Product;
 

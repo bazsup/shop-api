@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
 class CartRepositoryInMemTest {
@@ -24,7 +25,7 @@ class CartRepositoryInMemTest {
     void testCreateCart() {
         String cartId = "cart-mock-001";
 
-        Cart cart = underTest.createCart(cartId);
+        Cart cart = underTest.save(Cart.create(cartId));
 
         MatcherAssert.assertThat(cart.getId(), CoreMatchers.equalTo(cartId));
         MatcherAssert.assertThat(cart.getLineItems().size(), Matchers.comparesEqualTo(0));
@@ -61,24 +62,24 @@ class CartRepositoryInMemTest {
 
     @Test
     void testFindByCartId() {
-        Cart expected = underTest.createCart("mock-create-expected-id-1");
+        Cart expected = underTest.save(Cart.create("mock-create-expected-id-1"));
 
-        Cart actualCart = underTest.findByCartId(expected.getId());
+        Optional<Cart> actualCart = underTest.findById(expected.getId());
 
-        MatcherAssert.assertThat(actualCart.getId(), CoreMatchers.equalTo(expected.getId()));
+        MatcherAssert.assertThat(actualCart.get().getId(), CoreMatchers.equalTo(expected.getId()));
     }
 
     @Test
     void testFindByCartIdNotFound() {
         Assertions.assertThrows(EntityNotFoundException.class, () -> {
-            underTest.findByCartId("invalidCaRtId-x-1-INSERT INTO $");
+            underTest.findById("invalidCaRtId-x-1-INSERT INTO $");
         });
     }
 
     @Test
     void testFindByNullCartIdNotFound() {
         Assertions.assertThrows(EntityNotFoundException.class, () -> {
-            underTest.findByCartId(null);
+            underTest.findById(null);
         });
     }
 }

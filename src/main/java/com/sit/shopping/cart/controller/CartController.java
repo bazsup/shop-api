@@ -1,5 +1,7 @@
 package com.sit.shopping.cart.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -8,6 +10,9 @@ import com.sit.shopping.client.ProductClient;
 import com.sit.shopping.coupon.model.Coupon;
 import com.sit.shopping.coupon.repository.CouponRepository;
 import com.sit.shopping.product.model.Product;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,10 +45,11 @@ public class CartController {
     private CouponRepository couponRepository;
 
     @PostMapping("/add")
+    @Transactional
     public AddProductResponse addProductToCart(@RequestBody @Valid AddProductRequest request) {
         Product product = productClient.getProduct(request.getProductId());
 
-        Cart cart = cartRepository.findOrCreateCart(request.getCartId());
+        Cart cart = findOrCreate(request.getCartId());
 
         cart.addProduct(product);
 
@@ -54,21 +60,22 @@ public class CartController {
 
     @GetMapping("/status")
     public CartStatusDTO getCartStatus(@RequestParam @Valid @NotBlank String cartId) {
-        Cart cart = cartRepository.findByCartId(cartId);
+        Optional<Cart> cart = cartRepository.findById(cartId);
 
-        return new CartStatusDTO(cart);
+        return new CartStatusDTO(cart.get());
     }
 
     @GetMapping("/summary")
-    public Cart getCartSummary(@RequestParam String cartId) {
-        Cart cart = cartRepository.findByCartId(cartId);
+    public Optional<Cart> getCartSummary(@RequestParam String cartId) {
+        Optional<Cart> cart = cartRepository.findById(cartId);
 
         return cart;
     }
 
     @PostMapping("/applyCoupon")
+    @Transactional
     public ApplyCouponResponse applyCoupon(@RequestBody @Valid ApplyCouponRequest request) {
-        Cart cart = cartRepository.findOrCreateCart(request.getCartId());
+        Cart cart = this.findOrCreate(request.getCartId());
 
         Coupon coupon = couponRepository.findByCoupon(request.getCoupon());
 
@@ -77,5 +84,16 @@ public class CartController {
         cartRepository.save(cart);
 
         return new ApplyCouponResponse(cart.getDiscountDescription());
+    }
+
+    private Cart findOrCreate(String cartId) {
+        Optional<Cart> maybe = cartRepository.findById(cartId);
+        Cart cart;
+        if (maybe.isPresent()) {
+            cart = maybe.get();
+        } else {
+            cart = Cart.create(cartId);
+        }
+        return cart;
     }
 }

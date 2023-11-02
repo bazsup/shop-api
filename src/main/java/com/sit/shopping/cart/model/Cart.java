@@ -1,8 +1,15 @@
 package com.sit.shopping.cart.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sit.shopping.cart.converter.JsonConverter;
 import com.sit.shopping.coupon.model.Coupon;
 import com.sit.shopping.product.model.Product;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,19 +18,35 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Entity
+@Table(name = "cart")
 public class Cart {
+
+    @Id
     private String id;
 
+    @Convert(converter = JsonConverter.class)
+    @Column(name = "line_items")
     private List<CartItem> lineItems;
+
     @JsonIgnoreProperties
+    @Column(name = "number_of_items")
     private int numberOfItems;
 
+    @Column(name = "subtotal")
     private BigDecimal subtotal;
+
+    @Column(name = "discount_amount")
     private BigDecimal discountAmount;
+
+    @Column(name = "total")
     private BigDecimal total;
 
+    @Column(name = "discount_name")
     private String discountName;
+
     @JsonIgnoreProperties
+    @Column(name = "discount_description")
     private String discountDescription;
 
     public static Cart create(String id) {
@@ -104,11 +127,13 @@ public class Cart {
     }
 
     public void addProduct(Product product) {
-        Optional<CartItem> existingItem = lineItems.stream().filter(cartItem -> cartItem.getId().equals(product.getId()))
+        Optional<CartItem> existingItem = lineItems.stream()
+                .filter(cartItem -> cartItem.getId().equals(product.getId()))
                 .findFirst();
 
         if (existingItem.isEmpty()) {
-            CartItem cartItem = CartItem.create(product.getId(), product.getName(), 1, new BigDecimal(product.getPrice()));
+            CartItem cartItem = CartItem.create(product.getId(), product.getName(), 1,
+                    new BigDecimal(product.getPrice()));
             lineItems.add(cartItem);
         } else {
             CartItem cartItem = existingItem.get();
